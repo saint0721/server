@@ -25,9 +25,13 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.post('/', async (req, res) => {
-  await db.collection('post').updateOne({ _id : new ObjectId(req.body.id) }, { $set : { title : req.body.title, content : req.body.content } })
+router.post('/:id', async (req, res) => {
+  try {
+    await db.collection('post').updateOne({ _id : new ObjectId(req.params.id) }, { $set : { title : req.body.title, content : req.body.content } })
   res.redirect('/list')
+  } catch(err) {
+    console.log(err)
+  }
 })
 
 module.exports = router

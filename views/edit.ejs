@@ -9,7 +9,7 @@
 </head>
 <%- include('offcanvas.ejs') %>
 
-<form class="form-box" action="/edit" method="post">
+<form class="form-box" action="/edit/<%=list._id %>" method="post">
   <h4>수정하기</h4>
   <input name="id" value="<%= list._id %>" style="display: none">
   <input name="title" value="<%= list.title %>">

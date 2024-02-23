@@ -7,7 +7,6 @@ let connectDB = require('./db.js')
 const { ObjectId } = require('mongodb')
 let db 
 connectDB.then((client) => {
-  console.log('DB 연결 성공')
   db = client.db('forum')
 }).catch((err) => {
   console.error(err)
@@ -19,8 +18,8 @@ router.use(bodyParser.urlencoded({ extended : true }))
 
 router.get('/', async (req, res) => {
   try {
-    res.render('list.ejs')
-    await db.collection('post').find().toArray()
+    let result = await db.collection('post').find().toArray()
+    res.render('list.ejs', { list : result })
   } catch(err) {
     console.error(err)
   }

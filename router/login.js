@@ -2,12 +2,23 @@ const express = require('express')
 const router = express.Router()
 const bodyParser = require('body-parser')
 
+let connectDB = require('./db.js')
+const { ObjectId } = require('mongodb')
+let db 
+connectDB.then((client) => {
+  db = client.db('forum')
+}).catch((err) => {
+  console.error(err)
+})
+
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended : true }))
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   try {
     res.render('login.ejs')
+    let result = await db.collection('post').find().toArray()
+    console.log(result)
   } catch(err) {
     console.error(err)
   }

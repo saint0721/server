@@ -26,8 +26,12 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-  await db.collection('post').insertOne({ title : req.body.title, content : req.body.content })
+  if(req.body.title == '' && req.body.content == '') {
+    res.send('내용을 적어주세요')
+  } else {
+    await db.collection('post').insertOne({ title : req.body.title, content : req.body.content })
   res.redirect('/list')
+  }
 })
 
 module.exports = router
