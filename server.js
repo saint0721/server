@@ -4,6 +4,7 @@ require('dotenv').config()
 // 익스프레스
 const express = require('express')
 const app = express()
+app.use(express.json())
 
 // MongoDB 연결
 let connectDB = require('./router/db.js')
@@ -20,6 +21,9 @@ connectDB.then((client) => {
 // 경로
 const path = require('path')
 
+// method-override
+const methodOverride = require('method-override')
+
 // ejs 경로 설정
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
@@ -30,6 +34,9 @@ app.use('/list', require('./router/list'))
 app.use('/write', require('./router/write'))
 app.use('/detail', require('./router/detail'))
 app.use('/edit', require('./router/edit'))
+
+// method-override 사용
+app.use(methodOverride('_method'))
 
 // css 경로 설정
 app.use(express.static(__dirname + '/public/stylesheet'))

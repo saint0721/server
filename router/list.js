@@ -25,4 +25,11 @@ router.get('/', async (req, res) => {
   }
 })
 
+// 데이터 삭제기능 구현
+router.delete('/delete', async (req, res) => {
+  console.log(req.query)
+  await db.collection('post').deleteOne({ _id : new ObjectId(req.query.docid )})
+  console.log('DB 삭제완료')
+})
+
 module.exports = router
